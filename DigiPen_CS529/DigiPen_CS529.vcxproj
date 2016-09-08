@@ -72,8 +72,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
-    <LibraryPath>C:\Users\chiyen.teng\Documents\DigiPen_CS529\glfw-3.2.1\lib-vc2015;C:\Users\chiyen.teng\Documents\DigiPen_CS529\glew-2.0.0\lib\Release\Win32;$(LibraryPath)</LibraryPath>
-    <IncludePath>C:\Users\chiyen.teng\Documents\DigiPen_CS529\glfw-3.2.1\include;C:\Users\chiyen.teng\Documents\DigiPen_CS529\glew-2.0.0\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\CHACHACHA\Documents\DigiPen_CS529\glew-2.0.0\lib\Release\Win32;C:\Users\CHACHACHA\Documents\DigiPen_CS529\glfw-3.2.1\lib-vc2015;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\CHACHACHA\Documents\DigiPen_CS529\glfw-3.2.1\include;C:\Users\CHACHACHA\Documents\DigiPen_CS529\glew-2.0.0\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
