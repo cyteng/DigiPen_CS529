@@ -18,3 +18,7 @@ DigiPen_CS529/Debug/vc140.pdb
 /DigiPen_CS529/DigiPen_CS529.vcxproj
 /DigiPen_CS529/ReadMe.txt
 /DigiPen_CS529/DigiPen_CS529.vcxproj.filters
+*.opendb
+*.tlog
+*.lastbuildstate
+*.idb
