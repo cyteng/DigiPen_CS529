@@ -23,3 +23,6 @@ DigiPen_CS529/Debug/vc140.pdb
 *.lastbuildstate
 *.idb
 *.db
+/Debug
+/DigiPen_CS529/Debug
+/digipen_cs529/Debug
