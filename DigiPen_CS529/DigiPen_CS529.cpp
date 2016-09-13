@@ -160,7 +160,7 @@ int main()
 		// Create transformations
 		mat4 transform;
 		transform = translate(transform, vec3(0.5f, -0.5f, 0.0f));
-		transform = rotate(transform, (GLfloat)glfwGetTime() * 1.0f, vec3(0.0f, 0.0f, 1.0f));
+		transform = rotate(transform, (GLfloat)glfwGetTime() * radians(50.0f), vec3(0.0f, 0.0f, 1.0f));
 
 		// Get matrix's uniform location and set matrix
 		GLint transformLoc = glGetUniformLocation(ourShader.Program, "transform");
