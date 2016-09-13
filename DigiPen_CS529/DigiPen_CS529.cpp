@@ -9,10 +9,15 @@
 
 // Other Libs
 #include <SOIL.h>
+// GLM Mathematics
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 // Other includes
 #include "Shader.h"
 
+using namespace glm;
 
 // Function prototypes
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
@@ -48,7 +53,7 @@ int main()
 
 
 	// Build and compile our shader program
-	Shader ourShader("shaders/textures.vs", "shaders/textures.frag");
+	Shader ourShader("shaders/transformations.vs", "shaders/transformations.frag");
 
 
 	// Set up vertex data (and buffer(s)) and attribute pointers
@@ -59,8 +64,7 @@ int main()
 		-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // Bottom Left
 		-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // Top Left 
 	};
-	GLuint indices[] = {  
-		// Note that we start from 0!
+	GLuint indices[] = {  // Note that we start from 0!
 		0, 1, 3, // First Triangle
 		1, 2, 3  // Second Triangle
 	};
@@ -87,24 +91,19 @@ int main()
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(6 * sizeof(GLfloat)));
 	glEnableVertexAttribArray(2);
 
-	glBindVertexArray(0); 
-	// Unbind VAO
+	glBindVertexArray(0); // Unbind VAO
 
 
-	// Load and create a texture 
+						  // Load and create a texture 
 	GLuint texture1;
 	GLuint texture2;
 	// ====================
 	// Texture 1
 	// ====================
 	glGenTextures(1, &texture1);
-	glBindTexture(GL_TEXTURE_2D, texture1); 
-	
-	// All upcoming GL_TEXTURE_2D operations now have effect on our texture object
-	// Set our texture parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	
-	
-	// Set texture wrapping to GL_REPEAT
+	glBindTexture(GL_TEXTURE_2D, texture1); // All upcoming GL_TEXTURE_2D operations now have effect on our texture object
+											// Set our texture parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// Set texture wrapping to GL_REPEAT
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	// Set texture filtering
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -115,12 +114,10 @@ int main()
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
 	glGenerateMipmap(GL_TEXTURE_2D);
 	SOIL_free_image_data(image);
-	glBindTexture(GL_TEXTURE_2D, 0); 
-	
-	// Unbind texture when done, so we won't accidentily mess up our texture.
-	// ===================
-	// Texture 2
-	// ===================
+	glBindTexture(GL_TEXTURE_2D, 0); // Unbind texture when done, so we won't accidentily mess up our texture.
+									 // ===================
+									 // Texture 2
+									 // ===================
 	glGenTextures(1, &texture2);
 	glBindTexture(GL_TEXTURE_2D, texture2);
 	// Set our texture parameters
@@ -148,8 +145,6 @@ int main()
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		// Activate shader
-		ourShader.Use();
 
 		// Bind Textures using texture units
 		glActiveTexture(GL_TEXTURE0);
@@ -158,6 +153,18 @@ int main()
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, texture2);
 		glUniform1i(glGetUniformLocation(ourShader.Program, "ourTexture2"), 1);
+
+		// Activate shader
+		ourShader.Use();
+
+		// Create transformations
+		mat4 transform;
+		transform = translate(transform, vec3(0.5f, -0.5f, 0.0f));
+		transform = rotate(transform, (GLfloat)glfwGetTime() * 1.0f, vec3(0.0f, 0.0f, 1.0f));
+
+		// Get matrix's uniform location and set matrix
+		GLint transformLoc = glGetUniformLocation(ourShader.Program, "transform");
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, value_ptr(transform));
 
 		// Draw container
 		glBindVertexArray(VAO);
